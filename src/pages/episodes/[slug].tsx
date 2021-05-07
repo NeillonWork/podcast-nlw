@@ -10,13 +10,15 @@ import { convertDurationtoTImeString } from '../../utils/convertDUrationToTimeSt
 import styles from './episode.module.scss';
 import Image from 'next/image';
 
+import { usePlayer } from '../../contexts/PlayerContext';
+
 
 type Episode = {
     id: string;
     title: string;
     thumbnail: string;
     members: string;
-    duration: string;
+    duration: number;
     durationAsString: string;
     url: string;
     publishedAt: string;
@@ -28,6 +30,7 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+    const { play } = usePlayer();
 
     return (
         <div className={styles.episode}>
@@ -43,7 +46,7 @@ export default function Episode({ episode }: EpisodeProps) {
                     src={episode.thumbnail}
                     objectFit="cover"
                 />
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                     <img src="/play.svg" alt="Tocar episódio" />
                 </button>
             </div>
